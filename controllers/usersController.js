@@ -1,6 +1,11 @@
+const { response, request } = require("express");
+
 const User = require("../models/user"),
   passport=require("passport"),
-  getUserParams=body=>{
+  mongoose=require('mongoose'),
+  ObjectId=mongoose.ObjectId;
+
+  const getUserParams=(body)=>{
     return{
       name:{
         first:body.first,
@@ -15,33 +20,38 @@ const User = require("../models/user"),
 module.exports = {
   index: (req, res, next) => {
     User.find()
-      .then(users => {
+      .then((users) => {
         res.locals.users = users;
         next();
       })
-      .catch(error => {
-        console.log(`Error fetching users: ${error.message}`);
-        next(error);
+      .catch((error) => {
+        console.log(`Error fetching users: ${error}`);
+        response.redirect('/');
       });
   },
   indexView: (req, res) => {
-    res.render("users/index");
+    res.render("users/index",{
+      flashMessages:{
+        success:"Loaded All Users Successfully!"
+      }
+    });
   },
   new: (req, res) => {
     res.render("users/new");
   },
   create: (req, res, next) => {
-      if(req.skip) next();
-
+      if(req.skip) {
+        next();
+      }
       let newUser=new User(getUserParams(req.body));
 
-      User.register(newUser,req.body.password,(e,user)=>{
+      User.register(newUser,req.body.password,(error,user)=>{
         if(user){
           req.flash("success",`${user.fullName}'s account created successfully`);
           res.locals.redirect="/users";
           next();
         }else{
-          req.flash("error",`Failed to create user account because: ${e.message}`);
+          req.flash("error",`Failed to create user account because: ${error.message}`);
           res.locals.redirect="/users/new";
           next();
         }
@@ -50,11 +60,11 @@ module.exports = {
   redirectView: (req, res, next) => {
     let redirectPath = res.locals.redirect;
     if (redirectPath) res.redirect(redirectPath);
-    else next();
+    else res.render('errror');
   },
   show: (req, res, next) => {
     let userId = req.params.id;
-    User.findById(userId)
+    User.findById(new mongoose.Types.ObjectId(userId))
       .then(user => {
         res.locals.user = user;
         next();
@@ -69,7 +79,7 @@ module.exports = {
   },
   edit:(req,res,next)=>{
     let userId=req.params.id;
-    User.findById(userId)
+    User.findById(new mongoose.Types.ObjectId(userId))
     .then(user=>{
       res.render("users/edit",{
         user:user
@@ -82,7 +92,7 @@ module.exports = {
   },
 
   update:(req,res,next)=>{
-    let userId=req.params.id,
+    let userId=new mongoose.Types.ObjectId(request.params.id);
     userParams=getUserParams(req.body);
     User.findByIdAndUpdate(userId,{
       $set:userParams
@@ -94,24 +104,24 @@ module.exports = {
     })
     .catch(error=>{
       console.log(`Error updating usere by ID:  ${error.message}`);
-
       next(error);
     });
   },
   delete:(req,res,next)=>{
-    let userId=req.params.id;
+    let userId=new mongoose.ObjectId(request.params.id);
     User.findByIdAndRemove(userId)
     .then(()=>{
+      console.log('User fetched Successfully...');
       res.locals.redirect="/users";
       next();
     })
     .catch(error=>{
-      console.log(`Error deleting  user by ID:{error.message}`);
-      next();
+      console.log(`Error deleting  user by ID:${error.message}`);
+      next(error);
     });
   },
   login:(req,res)=>{
-    res.render("user/login");
+    res.render("users/login");
   },
   validate:(req,res,next)=>{
     req
@@ -172,7 +182,7 @@ module.exports = {
     }
   },
   apiAuthenticate:(req,res,next)=>{
-    passport.authenticate("local",(errors,user)=>{
+    passport.authenticate("local",(error,user)=>{
       if(user){
         let signedToken=jsonWebToken.sign(
           {

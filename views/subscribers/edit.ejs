@@ -1,13 +1,14 @@
-<div class="data-form">
-    <form class="form-signin" action="<%=`/subscribers/${subscriber._id}/update?_method=PUT`%>" method="POST">
-      <h2 class="form-signin-heading">Edit subscriber:</h2>
-      <label for="inputName">Name</label>
-      <input type="text" name="name" id="inputName" class="form-control" value="<%= subscriber.name %>" placeholder="Name" autofocus>
-      <label for="inputEmail">Email address</label>
-      <input type="email" name="email" id="inputEmail" class="form-control" value="<%= subscriber.email %>" placeholder="Email address" required>
-      <label for="inputZipCode">Zip Code</label>
-      <input type="text" name="zipCode" id="inputZipCode" pattern="[0-9]{5}" class="form-control" value="<%= subscriber.zipCode %>" placeholder="Zip Code" required>
-      <br />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-    </form>
-  </div
+<div class="flex items-center justify-center h-screen" action="<%=`/subscribers/${subscriber._id}/update?_method=PUT`%>" method="POST">
+    <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+     <div class="text-white mt-10">
+       <h1 class="font-bold text-4xl">Welcome</h1>
+       <p class="font-semibold">Edit the existing Subscriber</p>
+     </div>
+     <form class="flex flex-col space-y-8 mt-10" action="<%=`/subscribers/${subscriber._id}/update?_method=PUT`%>" method="POST">
+       <input type="text" placeholder="Name" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='name' placeholder=' ' value="<%=subscriber.name%>" autofocus required>
+       <input type="text" placeholder="Email" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='email' value="<%=subscriber.email%>" required>
+       <input type="number" placeholder="ZipCode" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='zipCode' value="<%=subscriber.zipCode%>" required>
+       <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+     </form>
+   </div>
+</div>

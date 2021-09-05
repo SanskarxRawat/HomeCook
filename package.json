@@ -4,7 +4,7 @@
   "description": "A website to book cooking classes",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css":"tailwindcss build source/styles.css -o public/css/styles.css",
     "start": "node main.js"
   },
   "author": "sanskarXrawat",
@@ -27,6 +27,11 @@
     "passport": "^0.4.1",
     "passport-local-mongoose": "^6.1.0",
     "rand-token": "^1.0.1",
-    "socket.io": "^4.1.2"
+    "socket.io": "^4.1.2",
+    "tailwindcss": "^2.2.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SanskarxRawat/HomeCook"
   }
 }

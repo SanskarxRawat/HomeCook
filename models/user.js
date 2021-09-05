@@ -1,9 +1,10 @@
 const mongoose = require("mongoose"),
   {Schema}=require("mongoose"),
   passportLocalMongoose=require("passport-local-mongoose"),
-  Subscriber=require("./subscriber");
+  randToken=require('rand-token'),
+  Subscriber=require("./subscriber"),
 
- var userSchema = new Schema(
+userSchema = new Schema(
     {
       name: {
         first: {
@@ -34,10 +35,12 @@ const mongoose = require("mongoose"),
         type: Schema.Types.ObjectId,
         ref: "Subscriber"
       },
-      courses: [{ type: Schema.Types.ObjectId, ref: "Course" }]
-    },
-    {
-      timestamps: true
+      courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
+      apiToken:{
+        type:String
+      }
+    },{
+      timestamps:true
     }
   );
 
@@ -47,6 +50,12 @@ userSchema.virtual("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
 });
 
+userSchema.pre("save",function(next){
+  let user=this;
+  if(!user.apiToken) user.apiToken=randToken.generate(16);
+  next();
+});
+
 
 userSchema.pre("save",function(next){
   let user=this;
@@ -54,11 +63,11 @@ userSchema.pre("save",function(next){
     Subscriber.findOne({
       email:user.email
     })
-    .then(subscriber=>{
+    .then((subscriber)=>{
       user.subscribedAccount=subscriber;
       next();
     })
-    .catch(error=>{
+    .catch((error)=>{
       console.log(`Error in connectiong subscriber: ${error.message}`);
       next(error);
     });
@@ -69,35 +78,9 @@ userSchema.pre("save",function(next){
 });
 
 
-userSchema.pre("save",function(next){
-  let user=this;
-
-  bcrypt.hash(user.password,10).then(hash=>{
-    user.password=hash;
-    next();
-  })
-  .catch(error=>{
-    console.log(`Error in hashing password: ${error.message}`);
-    next(error);
-  });
-
-});
-
-userSchema.methods.passwordComparison=function(inputPassword){
-  let user=this;
-  return bcrypt.compare(inputPassword,user.password);
-};
-
-userSchema.pre("save",function(next){
-  let user=this;
-  if(!user.apiToken) user.apiToken=randToken.generate(16);
-  next();
-});
-
-
 userSchema.plugin(passportLocalMongoose,{
   usernameField:"email"
 });
 
 
-module.exports = mongoose.model("Usner", userSchema);
+module.exports = mongoose.model("User", userSchema);

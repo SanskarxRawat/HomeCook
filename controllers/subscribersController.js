@@ -15,8 +15,8 @@ const Subscriber=require("../models/subscriber"),
         next();
       })
       .catch(error=>{
-        console.log(`Error fetching subscribers :{error.message}`);
-        next(error);
+        console.log(`Error fetching subscribers :${error.message}`);
+        res.redirect("/");
       });
     },
     indexView:(req,res)=>{
@@ -68,7 +68,7 @@ const Subscriber=require("../models/subscriber"),
         next();
       })
       .catch(error=>{
-        console.log(`Error fetchig subscriber by ID: ${error.message}`)
+        console.log(`Error fetchig subscriber by ID: ${subscriberId}`)
         next(error);
       });
     },
@@ -95,7 +95,7 @@ const Subscriber=require("../models/subscriber"),
       Subscriber.findByIdAndUpdate(subscriberId,{
         $set:subscriberParams
       })
-      .then(subscriber=>{
+      .then((subscriber)=>{
         res.locals.redirect=`/subscribers/${subscriberId}`;
         res.locals.subscriber=subscriber;
         next();

@@ -1,40 +1,20 @@
-<h1 class="center">Courses Data for  <%= course.tilte%></h1>
-
-
-<table class="table">
-    <tr>
-        <th>Title</th>
-        <td>
-            <%= course.title%>
-        </td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td>
-            <%=course.description%>
-        </td>
-    </tr>
-    <tr>
-        <th>Max Students</th>
-        <td>
-            <%= course.maxStudents%>
-        </td>
-    </tr>
-    <tr>
-        <th>Cost</th>
-        <td><%= course.cost%></td>
-    </tr>
-</table>
-
-<div>
-    <a class="button" href="<%=`/courses/${courses._id}/edit`%>">
-        Edit Courses Details
-    </a>
-</div>
-<div>
-    <a class="button" href="<%= `/courses/${course._id}/delete?_method=DELETE` %>" onclick="return confirm('Are you sure you want to delete this record?')" a>Delete</a>
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="py-3 sm:max-w-xl sm:mx-auto">
+      <div class="bg-white shadow-lg border-gray-100 max-h-80	 border sm:rounded-3xl p-8 flex space-x-8">
+        <div class="h-48 overflow-visible w-1/2">
+            <img class="rounded-3xl shadow-lg" src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/1LRLLWGvs5sZdTzuMqLEahb88Pc.jpg" alt="">
+        </div>
+        <div class="flex flex-col w-1/2 space-y-4">
+          <div class="flex justify-between items-start">
+            <h2 class="text-3xl font-bold"><%=course.title %></h2>
+          </div>
+          <p class=" text-gray-400 max-h-40 overflow-y-hidden"><%=course.description%></p>
+          <div>
+            <div class="text-sm text-gray-400">Max Students</div>
+            <div class="text-lg text-gray-800"><%=course.maxStudents%></div>
+          </div>
+          <div class="flex text-2xl font-bold text-a">₹<%=course.cost%></div>
+        </div>
+      </div>
+    </div>
   </div>
-
-<div>
-    <a class="button" href="/courses">View all </a>
-</div>

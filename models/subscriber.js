@@ -1,7 +1,5 @@
 const mongoose = require("mongoose"),
- { Schema } = mongoose;
-
- 
+ { Schema } = mongoose,
  subscriberSchema = new Schema(
    {
     name: { 

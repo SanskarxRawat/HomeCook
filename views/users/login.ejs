@@ -1,11 +1,31 @@
-<form class="form-signin" action="/users/login" method="POST">
-    <h2  class="form-signin-heading">Login:</h2>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" autofocus required>
-    <label for="inputPasswrord" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPasswrord"
-    class="form-control" placeholder="Password"  required>
-    <button class="btn btn-lg btn-primary btn-block" type="sumit">
-        Login
-    </button>
-</form>
+<div class="py-6">
+  <div class="flex bg-white-500 rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+    <div class="hidden lg:block lg:w-1/2 bg-cover rounded" style="background-image:url('https://images.unsplash.com/photo-1513135065346-a098a63a71ee?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y29va2luZ3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60')"></div>
+
+        <div class="w-full p-8 lg:w-1/2">
+            <h2 class="text-2xl font-semibold text-gray-700 text-center">Welcome back!</h2>
+            <div class="mt-4 flex items-center justify-between">
+                <span class="border-b w-1/5 lg:w-1/4"></span>
+                <span class="border-b w-1/5 lg:w-1/4"></span>
+            </div>
+            <div class="mt-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>
+                <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email">
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                </div>
+                <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password">
+            </div>
+            <div class="mt-8">
+                <button class="bg-yellow-400 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+                <span class="border-b w-1/5 md:w-1/4"></span>
+                <a href="#" class="text-xs text-gray-500 uppercase">or sign up</a>
+                <span class="border-b w-1/5 md:w-1/4"></span>
+            </div>
+        </div>
+    </div>
+</div>

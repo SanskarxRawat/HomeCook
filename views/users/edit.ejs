@@ -1,17 +1,15 @@
-<div class="data-form">
-    <form class="form-signin" method="POST" action="<%=`/users/${user._id}/update?_method=PUT`%>">
-      <h2 class="form-signin-heading">Edit user:</h2>
-      <label for="inputFirstName">First Name</label>
-      <input class="form-control" type="text" name="first" id="inputFirstName" value="<%= user.name.first %>" placeholder="First" autofocus>
-      <label for="inputLastName">Last Name</label>
-      <input class="form-control" type="text" name="last" id="inputLastName" value="<%= user.name.last %>" placeholder="Last">
-      <label for="inputPassword">Password</label>
-      <input class="form-control" type="password" name="password" id="inputPassword" value="<%= user.password %>" placeholder="Password" required>
-      <label for="inputEmail">Email address</label>
-      <input class="form-control" type="email" name="email" id="inputEmail" value="<%= user.email %>" placeholder="Email address" required>
-      <label for="inputZipCode">Zip Code</label>
-      <input class="form-control" type="text" name="zipCode" id="inputZipCode" pattern="[0-9]{5}" value="<%= user.zipCode %>" placeholder="Zip Code" required>
-      <br />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-    </form>
-  </div>
+<div class="flex items-center justify-center h-screen" >
+    <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+     <div class="text-white mt-10">
+       <h1 class="font-bold text-4xl">Welcome</h1>
+       <p class="font-semibold">Edit the existing User</p>
+     </div>
+     <form class="flex flex-col space-y-8 mt-10" action="<%=`/users/${user._id}/update?_method=PUT`%>" method="POST">
+       <input type="text" placeholder="FirstName" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='first' placeholder=' ' value="<%=user.name.first%>" autofocus required>
+       <input type="text" placeholder="LastName" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='last' value="<%=user.name.last%>" required>
+       <input type="text" placeholder="Email" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='email' value="<%=user.email%>" required>
+       <input type="number" placeholder="zipCode" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='zipCode' value="<%=user.zipCode%>" required>
+       <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+     </form>
+   </div>
+</div>

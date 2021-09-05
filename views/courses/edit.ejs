@@ -1,14 +1,15 @@
-<div class="data-form">
-    <form class="form-signin" action="<%=`/courses/${course._id}/update?_method=PUT`%>" method="POST">
-      <h2 class="form-signin-heading">Edit course:</h2>
-      <label for="inputTitle">Title</label>
-      <input type="text" name="title" id="inputTitle" class="form-control" value="<%= course.title %>" placeholder="Title" autofocus>
-      <label for="inputDescription">Description</label>
-      <input type="text" name="description" id="inputDescription" class="form-control" value="<%= course.description %>" placeholder="Description">
-      <label for="inputItems">Items</label>
-      <input type="text" name="items" id="inputItems" class="form-control" value="<%= course.items %>" placeholder="Items" required>
-      <label for="inputZipCode">Zip Code</label>
-      <input type="text" name="zipCode" id="inputZipCode" pattern="\d*" class="form-control" value="<%= course.zipCode %>" placeholder="Zip Code" required>
-      <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-    </form>
+<div class="flex items-center justify-center h-screen">
+ <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+  <div class="text-white mt-10">
+    <h1 class="font-bold text-4xl">Welcome</h1>
+    <p class="font-semibold">Edit the existing Course</p>
   </div>
+  <form class="flex flex-col space-y-8 mt-10" >
+    <input type="text" placeholder="Title" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='title' value="<%course.title%>" autofocus required>
+    <input type="text" placeholder="Description" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='description' value="<%=course.description%>" required>
+    <input type="number" placeholder="Max Students" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='maxStudents' value="<%=course.maxStudents%>" required>
+    <input type="number" placeholder="Cost" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500" name='cost' value="<%=course.cost%>" required>
+    <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+  </form>
+</div>
+</div>

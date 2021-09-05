@@ -1,98 +1,48 @@
 <!DOCTYPE html>
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1">
-	<title>Recipe App</title>
-	<style media="screen">
-		body {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			color: black;
-			text-align: center;
-			font-family: sans-serif;
-		}
-		#nav {
-			background-color: #7D498D;
-		}
-		#footer {
-			background-color: #9C73A9;
-			position: relative;
-			bottom: 0;
-		}
-		#container {
-			height: 100px;
-			padding-top: 40px;
-		}
-		.block {
-			padding-top: 40px;
-			width: 100%;
-			text-align: center;
-			height: 60px;
-			border: black dashed 5px;
-		}
-	</style>
-</head>
-
+<html lang="en">
+	<head>
+		<title>Home Cook</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/styles.css">
+	</head>
 <body>
-	<div id="nav">
-		<div class="col-sm nav-align">
-			<h1 id="title">Recipe App</h1>
-			<a href="/chat" class="chat-icon">
-				@
-			</a>
+	<div class="bg-local... rounded-lg bg-auto" style="background-image: url(https://images.unsplash.com/photo-1543353071-873f17a7a088?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);">
+		<div class="text-9xl mx-auto my-auto p-4 font-black text-center font-homeheader">
+			<h2><span class="text-gray-600">Home</span><span class="text-yellow-300">Cook</span></h2>
 		</div>
-		<div class="col-sm nav-align">
-			<a href="/">
-				<span class="button">Home</span>
-			</a>
-			<a href="/courses">
-				<span class="button">Cooking Courrses</span>
-			</a>
-			<a href="/contact">
-				<span class="button">Contact</span>
-			</a>
-		</div>
-		<div class="login-status">
-			<% if((loggedIn)){%>
-				<div class="bubble logged-in">
-					Logged in as <a href="<%=`/users/${currentUser._id}`%>">
-						<%= currentUser.fullName %></a>
-				</div>
-				<div class="log-out">
-					<a href="/users/logout">Log out</a>
-				</div>
-				<div class="bubble log-in">
-					<a href="/users/login">Log In</a>
-				</div>
-			<%}%>
-		</div>
-	</div>
-
-	<div class="flashes">
-		<% if (flashMessages) { %>
-			<% if (flashMessages.success) { %>
-			<div class="flash success">
-				<%= flashMessages.success %>
-			</div>
-			<% } else if (flashMessages.error) { %>
-			<div class="flash error">
-				<%= flashMessages.error %>
-			</div>
+		<div class="overflow-hidden font-navigation mx-12">
+			<a class="float-left text-center text-4xl  w-150px px-7 font-navigation no-underline hover:underline ... " href="http://localhost:3000">Home</a>
+				<a class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ..." href="http://localhost:3000/courses">Courses</a>
+				<a class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ..." href="http://localhost:3000/users">Users</a>
+				<a class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ..." href="http://localhost:3000/subscribers">Subscribers</a>
+				<a class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ..." href="http://localhost:3000/chat">Chat</a>
+				<label class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline" id="modal-button" type="button" data-toggle="modal" data-target="#myModal">Latest Courses</label>
+			<%if(loggedIn){ %>
+				<p class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ...">Logged in as : <a href="<%= `/users/${currentUser._id}`%>"><%= currentUser.fullName%></a> <a href="<%= `/users/logout` %>">Logout</a></p>
+			<% } else {%>
+				<p class="float-left text-center text-4xl font-semibold w-150px px-7 font-navigation no-underline hover:underline ..."><a href="<%= `/users/login`%>">Login</a></p>
 			<% } %>
-			<% } %>
+		</div>
 	</div>
-
-	<div id="container">
-		<%- body %>
+	<div>
+		  <% if(flashMessages) {%>
+                <%if(flashMessages.success) {%>
+                    <div class="alert success" >
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <%= flashMessages.success%>
+                    </div>
+                <%} else if(flashMessages.error) {%>
+                    <div class="alert error">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <%= flashMessages.error%>
+                    </div>
+                <%}%>
+            <%}%>
 	</div>
-
-
+	<%- include('courses/_coursesModal.ejs')%>
+	<%- body%>
+	<script type="text/javascript" src="js/homeCook.js"></script>
 </body>
-
 </html>

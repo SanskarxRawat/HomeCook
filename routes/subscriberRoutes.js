@@ -1,5 +1,3 @@
-"use strict";
-
 const router=require("express").Router(),
     subscribersController=require("../controllers/subscribersController");
 
@@ -11,6 +9,5 @@ router.get("/:id/edit",subscribersController.edit);
 router.get("/:id/update",subscribersController.update,subscribersController.redirectView);
 router.get("/:id",subscribersController.show,subscribersController.showView);
 router.get("/:id/delete",subscribersController.delete,subscribersController.redirectView);
-
 
 module.exports=router;

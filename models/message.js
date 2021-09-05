@@ -1,5 +1,5 @@
 const mongoose=require("mongoose"),
-    {Schema}=require("mongoose");
+    {Schema}=mongoose;
 
     const messageSchema=new Schema(
         {

@@ -1,19 +1,18 @@
-"use strict";
-const Course=require("../models/course"),
-httpStatus=require("http-status-codes"),
-User=require("../models/user"),
-getCourseParams=body=>{
-    return{
-        title:body.title,
-        description:body.description,
-        maxStudents:body.maxStudents,
-        cost:body.cost
-    };
+const Course = require('../models/course'), 
+httpStatus = require('http-status-codes'), 
+User = require('../models/user'),
+getCourseParams = (body) => {
+    return ({
+        title : body.title, 
+        description : body.description, 
+        maxStudents : body.maxStudents, 
+        cost : body.cost
+    });
 };
 
 module.exports={
     index:(req,res,next)=>{
-        Course.find({})
+        Course.find()
         .then(courses=>{
             res.locals.courses=courses;
             next();
@@ -24,66 +23,65 @@ module.exports={
         });
     },
     indexView:(req,res)=>{
-            res.render("courses/index");
+           if(req.query.format==="json"){
+               res.send(res.locals.courses);
+           } else{
+               res.render("courses/index");
+         }
     },
     new:(req,res)=>{
         res.render("courses/new");
     },
     create:(req,res,next)=>{
-      let courseParams=getCourseParams(req.body);
-        Course.create(courseParams)
-        .then(course=>{
-            res.locals.redirect="/courses";
-            res.locals.course=course;
-            next();
-        })
-        .catch(error=>{
-            console.log(`Error saving course:${error.message}`);
-            next(error);
-        });
+      Course.create(getCourseParams(req.body))
+      .then(course=>{
+          res.locals.redirect='/courses';
+          next();
+      }).catch(error=>{
+          console.log('Error creating course : ${error.message}');
+          next(error);
+      });
     },
-    redirectView:(req,res,next)=>{
+    redirectView:(req,res)=>{
         let redirectPath=res.locals.redirect;
         if(redirectPath!==undefined) res.redirect(redirectPath);
-        else next();
+        else res.render('error');
     },
-    show:(req,res,next)=>{
-        let courseId=req.params.id;
+    show : (request, response, next) => {
+        let courseId = request.params.id;
         Course.findById(courseId)
-        .then(course=>{
-            res.locals.course=course;
+        .then(course => {
+            response.locals.course = course;
             next();
-        })
-        .catch(error=>{
-            console.log(`Error fetching course by Id:${error.message}`);
+        }).catch(error => {
+            console.log(`Error fetching course by id : ${error.message}`);
             next(error);
         });
     },
     showView:(req,res)=>{
         res.render("courses/show");
     },
-    edit:(req,res,next)=>{
-        let courseId=req.params.id;
+    edit : (request, response, next) => {
+        let courseId= request.params.id;
         Course.findById(courseId)
-        .then(course=>{
-            res.render("course/edit",{
-                course:course
+        .then(course => {
+            response.render('courses/edit', {
+                course : course
             });
-        })
-        .catch(error=>{
-            console.log(`Error fetching course by Id: ${error.message}`);
+        }).catch(error => {
+            console.log(`Error fetching course by id : ${error.message}`);
             next(error);
         });
     },
     update:(req,res,next)=>{
-        let  courseId=req.params.id,
-       courseParams=getCourseParams(req.body);
+        let  courseId=req.params.id;
+        let coursesParams=getCourseParams(req.body);
         Course.findByIdAndUpdate(courseId,{
             $set:coursesParams
         })
         .then(course=>{
-            res.locals.redirect=`/courses/${courseId}`;
             res.locals.course=course;
+            res.locals.redirect='/courses/${courseId}';
             next();
         })
         .catch(error=>{
@@ -100,7 +98,7 @@ module.exports={
         })
         .catch(error => {
             console.log(`Error deleting course by ID: ${error.message}`);
-            next();
+            next(error);
           });
     },
     respondJSON:(req,res)=>{

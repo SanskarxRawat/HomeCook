@@ -1,12 +1,7 @@
-"use strict";
+exports.index=(req,res)=>{
+  res.render("index");
+};
 
-module.exports={
-
-    index:(req,res)=>{
-        res.render("index");
-    },
-  
-    chat:(req,res)=>{
-        res.render("chat");
-    }
+exports.chat=(req,res)=>{
+  res.render("chat");
 };

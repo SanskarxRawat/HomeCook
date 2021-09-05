@@ -1,14 +1,15 @@
-<div class="data-form">
-    <form class="form-signin" action="<%=`/courses/create`%>" method="POST">
-      <h2 class="form-signin-heading">Create a new course:</h2>
-      <label for="inputTitle">Title</label>
-      <input type="text" name="title" id="inputTitle" class="form-control" placeholder="Title" autofocus>
-      <label for="inputDescription">Description</label>
-      <input type="text" name="description" id="inputDescription" class="form-control" placeholder="Description">
-      <label for="inputMaxStudents">Max Students</label>
-      <input type="text" name="maxStudents" id="inputMaxStudents" pattern="\d*" class="form-control" placeholder="Max Students" required>
-      <label for="inputCost">Cost</label>
-      <input type="text" name="cost" id="inputCost" pattern="\d*" class="form-control" placeholder="Cost" required>
-      <br /><button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
-    </form>
+<div class="flex items-center justify-center h-screen">
+  <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+  <div class="text-white mt-10">
+    <h1 class="font-bold text-4xl">Welcome</h1>
+    <p class="font-semibold">Let's create new Course!</p>
   </div>
+  <form class="flex flex-col space-y-8 mt-10" action="/courses/create" method="POST">
+    <input type="text" placeholder="Title" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500">
+    <input type="text" placeholder="Description" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500">
+    <input type="number" placeholder="Max Students" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500">
+    <input type="number" placeholder="Cost" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500">
+    <button class="border border-blue-500 bg-blue-500 text-white rounded-lg py-3 font-semibold">Submit</button>
+  </form>
+</div>
+</div>

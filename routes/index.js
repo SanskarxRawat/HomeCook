@@ -6,12 +6,11 @@ const router=require("express").Router(),
     homeRoutes=require("./homeRoutes")
     apiRoutes=require("./apiRoutes");
 
-router.use("/api",apiRoutes);
-router.use("/users",userRoutes);
-router.use("/subscribers",subscriberRoutes);
-router.use("/coureses",courseRoutes);
-router.use("/",homeRoutes);
-router.use("/",errorRoutes);
+    router.use('/users', userRoutes);
+    router.use('/subscribers', subscriberRoutes);
+    router.use('/courses', courseRoutes);
+    router.use('/api', apiRoutes);
+    router.use('/', homeRoutes);
+    router.use('/', errorRoutes);
 
 module.exports=router;
-

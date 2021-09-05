@@ -1,8 +1,7 @@
-"use strict";
 const router=require("express").Router(),
-    coursesController=require("../controllers/coursesController");
+coursesController=require("../controllers/coursesController");
 
-router.get("",coursesController.index,coursesController.indexView);
+router.get("/",coursesController.index,coursesController.indexView);
 router.get("/new",coursesController.new);
 router.get("/create",coursesController.create,coursesController.redirectView);
 router.get("/:id/edit",coursesController.edit);
