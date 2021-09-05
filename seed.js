@@ -1,11 +1,15 @@
 const mongoose=requrie("mongoose"),
-    Course=require("./models/course"),
+    Subscribers=require("./models/subscriber"),
     User=require("./models/user");
 
     mongoose.connect(
-        process.env.MONGODB_URI || "mongodb://localhost:27017/recipe_db",
-        {userNewUrlParser:true,useFindAndModify:false}
-);
+        'mongodb://localhost:27017/recipe_db', 
+        {
+            useNewUrlParser: true, useUnifiedTopology : true
+        }
+    );
+
+
 
 mongoose.connection;
 
@@ -20,6 +24,16 @@ const users=[
                 zipCode:224001
             },
             password:"rukasarashina"
+        }, {
+            details:{
+                name:{
+                    first:"Neelam",
+                    last:"Rawat"
+                },
+                email:"neelam1090@gmail.com",
+                zipCode:224001
+            },
+            password:"sweet"
         }
 ];
 
@@ -31,12 +45,12 @@ User.deleteMany().exec().then(()=>{
 var command=[];
 
 users.forEach(user=>{
-    commands.push(User.register(user.details,user.password));
+    command.push(User.register(user.details,user.password));
 });
 
-Promise.all(commands).then((r)=>{
+Promise.all(command).then((r) => {
     console.log(r);
     mongoose.connection.close();
-}).catch((error)=>{
-    console.log(`error :${error.message}`);
+}).catch((error) => {
+    console.log(`error : ${error.message}`);
 });

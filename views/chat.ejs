@@ -54,15 +54,19 @@
     </div>
     <!-- chats -->
     <div class="flex flex-col bg-gray-200 px-2 chat-services expand overflow-auto">
-    
-      
+    <ul class="text-black text-sm">
+    </ul>
     </div>
     <!-- send message -->
-    <div class="relative bg-white">
-      <input type="text" name="message" placeholder="Type "
-            class="pl-4 pr-16 py-2 border border-yellow-400 focus:outline-none w-full">
-        <button class="absolute right-0 bottom-0 text-yellow-500 bg-white  hover:text-yellow-400 m-1 px-3 py-1 w-auto transistion-color duration-100 focus:outline-none">Send</button>
-    </div>
+    <% if(currentUser){%>
+      <div class="relative bg-white">
+        <input type="text" name="message" placeholder="Type "
+              class="pl-4 pr-16 py-2 border border-yellow-400 focus:outline-none w-full">
+          <button class="absolute right-0 bottom-0 text-yellow-500 bg-white  hover:text-yellow-400 m-1 px-3 py-1 w-auto transistion-color duration-100 focus:outline-none">Send</button>
+      </div>
+      <input id="chat-user-id" type="hidden" value="<%=currentUser._id%>">
+      <input id="chat-user-name" type="hidden" value="<%=currentUser.fullName%>">
+    <%}%>
   </div>
   <div class="show-chat hidden mx-10 mb-6 mt-4 text-yellow-400 hover:text-yellow-500 flex justify-center items-center cursor-pointer ">
     <svg width="4em" height="4em" viewBox="0 0 16 16" class="bi bi-chat-text-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
