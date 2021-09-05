@@ -76,7 +76,7 @@ Course.remove({})
     return User.create({
         name:{
             first:"Sanskar",
-            last:"Kumar"
+            last:"Rawat"
         },
         email:"rawatavi.211@gmail.com",
         password:"rukasarashina",
