@@ -1,11 +1,4 @@
-const Subscriber=require("../models/subscriber"),
-  getSubscriberParams=(body)=>{
-    return{
-      name:body.name,
-      email:body.email,
-      zipCode:parseInt(body.zipCode)
-    };
-  };
+const Subscriber=require("../models/subscriber");
 
   module.exports={
     index:(req,res,next)=>{
@@ -39,26 +32,25 @@ const Subscriber=require("../models/subscriber"),
       .catch(error=>{
         if(error) res.send(error);
       });
-
     },
     create:(req,res,next)=>{
-      let subscriberParams=getSubscruberParams(req.body);
-      Subscriber.create(subscriberParams)
-      .then(subscriber=>{
-        res.locals.redirect="/subscribers";
-        res.locals.subscriber=subscriber;
+      Subscriber.create({
+          name:req.body.name,
+          email:req.body.email,
+          zipCode:req.body.zipCode
+      }).then(subscriber => {
+        res.locals.redirect = '/subscribers';
+        res.locals.subscriber = subscriber ;
         next();
-      })
-      .catch(error=>{
-        console.log(`Error saving subscriber:${error.message}`);
-        next(error);
+      }).catch(error => {
+          console.log(`Error creating subscriber : ${error.message}`);
+          next(error);
       });
     },
     redirectView:(req,res,next)=>{
       let redirectPath=res.locals.redirect;
-      if(redirectPath) res.redirect(redirectPat);
-      else 
-      next();
+      if(redirectPath) res.redirect(redirectPath);
+      else res.render('error');
     },
     show:(req,res,next)=>{
       let subscriberId=req.params.id;
@@ -78,7 +70,7 @@ const Subscriber=require("../models/subscriber"),
     edit:(req,res,next)=>{
       let  subscriberId=req.params.id;
       Subscriber.findById(subscriberId)
-      .then(subscriber=>{
+      .then((subscriber)=>{
         res.render("subscribers/edit",{
           subscriber:subscriber
         });
@@ -89,21 +81,23 @@ const Subscriber=require("../models/subscriber"),
       });
     },
     update:(req,res,next)=>{
-      let subscriberId=req.params.id,
-      subscriberParams=getSubscriberParams(req.body);
-
-      Subscriber.findByIdAndUpdate(subscriberId,{
-        $set:subscriberParams
-      })
-      .then((subscriber)=>{
-        res.locals.redirect=`/subscribers/${subscriberId}`;
-        res.locals.subscriber=subscriber;
+      let subscriberParams = {
+        name : req.body.name,
+        email : req.body.email, 
+        zipCode : req.body.zipCode
+    };
+    let subscriberId = req.params.id;
+    Subscriber.findByIdAndUpdate(subscriberId, {
+        $set : subscriberParams
+    }).then((subscriber) => {
+        res.locals.redirect = `/subscribers/${subscriberId}`;
+        res.locals.subscriber = subscriber;
         next();
-      })
-      .catch(error=>{
-        console.log(`Error updating subscriber subscriber by ID:${error.message}`);
+    })
+    .catch((error) => {
+        console.log(`Error updating user by id : ${error.message}`);
         next(error);
-      });
+    });
     },
     delete:(req,res,next)=>{
       let subscriberId=req.params.id;
@@ -114,7 +108,7 @@ const Subscriber=require("../models/subscriber"),
       })
       .catch(error=>{
         console.log(`Error deleting subscriber by ID:${error.message}`);
-        next();
+        next(error);
       });
     }
   };

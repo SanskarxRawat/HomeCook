@@ -1,22 +1,18 @@
-const { response, request } = require("express");
+const User = require('../models/user'), 
+passport = require('passport'), 
+mongoose = require('mongoose'),
+ObjectID = mongoose.objectID;
 
-const User = require("../models/user"),
-  passport=require("passport"),
-  mongoose=require('mongoose'),
-  ObjectId=mongoose.ObjectId;
-
-  const getUserParams=(body)=>{
-    return{
-      name:{
-        first:body.first,
-        last:body.last
-      },
-      email:body.email.email,
-      password:body.password,
-      zipCode:body.zipCode
+const getUserParams = (body) => {
+    return {
+        name : {
+            first : body.first, 
+            last : body.last
+        }, 
+        email : body.email, 
+        zipCode : body.zipCode, 
     };
-  };
-
+};
 module.exports = {
   index: (req, res, next) => {
     User.find()
@@ -60,7 +56,7 @@ module.exports = {
   redirectView: (req, res, next) => {
     let redirectPath = res.locals.redirect;
     if (redirectPath) res.redirect(redirectPath);
-    else res.render('errror');
+    else res.render('error');
   },
   show: (req, res, next) => {
     let userId = req.params.id;
@@ -92,23 +88,31 @@ module.exports = {
   },
 
   update:(req,res,next)=>{
-    let userId=new mongoose.Types.ObjectId(request.params.id);
-    userParams=getUserParams(req.body);
-    User.findByIdAndUpdate(userId,{
-      $set:userParams
-    })
-    .then(user=>{
-      res.locals.rediect=`/users/${userId}`;
-      res.locals.user=user;
+    let userParams = {
+      name : {
+          first : req.body.first, 
+          last : req.body.last
+      }, 
+      password : req.body.password, 
+      email : req.body.email, 
+      zipCode : req.body.zipCode
+  };
+  let userId = new mongoose.Types.ObjectId(req.params.id);
+  User.findByIdAndUpdate(userId, {
+      $set : userParams
+  })
+  .then(user => {
+      res.locals.redirect = `/users/${userId}`;
+      res.locals.user = user;
       next();
-    })
-    .catch(error=>{
-      console.log(`Error updating usere by ID:  ${error.message}`);
+  })
+  .catch(error => {
+      console.log(`Error updating user by id (updating error) : ${error.message}`);
       next(error);
-    });
+  });
   },
   delete:(req,res,next)=>{
-    let userId=new mongoose.ObjectId(request.params.id);
+    let userId=new mongoose.ObjectId(req.params.id);
     User.findByIdAndRemove(userId)
     .then(()=>{
       console.log('User fetched Successfully...');
@@ -170,7 +174,7 @@ module.exports = {
     if(token){
       User.findOne({apiToken:token})
       .then(user=>{
-        if(User) next();
+        if(user) next();
         else
         next(new Error("Invalid API token."));
       })
@@ -181,60 +185,5 @@ module.exports = {
       next(new Error("Invalid API Token"));
     }
   },
-  apiAuthenticate:(req,res,next)=>{
-    passport.authenticate("local",(error,user)=>{
-      if(user){
-        let signedToken=jsonWebToken.sign(
-          {
-            data:user._id,
-            exp:new Date().setDate(new Date().getDate()+1)
-          },
-          "secret_encoding_passphrase"
-        );
-        res.json({
-          success:true,
-          token:signedToken
-        });
-      }else
-        res.json({
-          success:false,
-          message:"Coult not authenticate user."
-        });
-    })(req,res,next);
-  },
-  verifyJWT:(req,res,next)=>{
-    let token=req.headers.token;
-    if(token){
-      jsonWebToken.verify(
-        token,
-        "secret_coding_passcode",
-        (errors,payload)=>{
-          if(payload){
-            User.findById(payload.data).then(user=>{
-                if(user){
-                  next();
-                }
-                else{
-                  res.status(httpStatus.FORBIDDEN).json({
-                    error:true,
-                    message:"No User account found."
-                  });
-                }
-            });
-          } else{
-            res.status(httpStatus.UNAUTHORIZED).json({
-              error:true,
-              message:"Cannot verify API token."
-            });
-            next();
-          }
-        }
-      );
-    }else{
-      res.status(httpStatus.UNAUTHORIZED).json({
-        error:true,
-        message:"Provide Token"
-      });
-    }
-  }
+ 
 };

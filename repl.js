@@ -80,7 +80,7 @@ Course.remove({})
         },
         email:"rawatavi.211@gmail.com",
         password:"rukasarashina",
-        zipCode:1234
+        zipCode:224001
     });
 })
 .then((user)=>{
