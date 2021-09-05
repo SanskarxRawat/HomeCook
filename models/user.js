@@ -1,48 +1,45 @@
-const mongoose = require("mongoose"),
-  {Schema}=require("mongoose"),
-  passportLocalMongoose=require("passport-local-mongoose"),
-  randToken=require('rand-token'),
-  Subscriber=require("./subscriber"),
-
-userSchema = new Schema(
-    {
-      name: {
-        first: {
-          type: String,
-          trim: true
-        },
-        last: {
-          type: String,
-          trim: true
+const mongoose = require('mongoose'), 
+passportLocalMongoose = require('passport-local-mongoose'),
+{ Schema } = mongoose, 
+randToken = require('rand-token'), 
+Subscriber = require('./subscriber'), 
+userSchema = new Schema({
+    name : {
+        first : {
+            type : String, 
+            trim : true
+        }, 
+        last : {
+            type : String, 
+            trim : true
         }
-      },
-      email: {
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true
-      },
-      zipCode: {
-        type: Number,
-        min: [1000, "Zip code too short"],
-        max: 99999
-      },
-      password: {
-        type: String,
-        required: true
-      },
-      subscribedAccount: {
-        type: Schema.Types.ObjectId,
-        ref: "Subscriber"
-      },
-      courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
-      apiToken:{
-        type:String
-      }
-    },{
-      timestamps:true
+    }, 
+    email : {
+        type : String, 
+        required : true, 
+        unique : true
+    }, 
+    zipCode : {
+        type : Number, 
+        min : [10000, 'Zip Code is too short'], 
+        max : [999999, 'Zip Code is too large']
+    }, 
+    courses : [
+        {
+            type : Schema.Types.ObjectId, 
+            ref : 'Course'
+        }
+    ], 
+    subscribedAccount : {
+        type : Schema.Types.ObjectId, 
+        ref : 'Subscriber'
+    }, 
+    apiToken : {
+        type : String
     }
-  );
+}, {
+    timestamps : true
+});
 
 
 

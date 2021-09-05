@@ -43,7 +43,7 @@ Course.remove({})
     });
 })
 .then((subscriber)=>{
-    console.log(`Created new subscriber: ${subcriber.name}`);
+    console.log(`Created new subscriber: ${subscriber.name}`);
     return Subscriber.findOne({name:'Sanskar'});
 })
 .then((subscriber)=>{
