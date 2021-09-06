@@ -38,7 +38,7 @@ module.exports={
           res.locals.redirect='/courses';
           next();
       }).catch(error=>{
-          console.log('Error creating course : ${error.message}');
+          console.log(`Error creating course : ${error.message}`);
           next(error);
       });
     },
@@ -130,7 +130,7 @@ module.exports={
                 let userJoined=currentUser.courses.some((userCourse)=>{
                     return userCourse.equals(course._id);
                 });
-                return Oject.assign(coursetoObject(),{joined:userJoined});
+                return Oject.assign(course.toObject(),{joined:userJoined});
             });
             res.locals.courses=mappedCourses;
             next();
