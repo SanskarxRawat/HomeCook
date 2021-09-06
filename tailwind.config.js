@@ -6,12 +6,9 @@ module.exports = {
       fontFamily:{
         homeheader:['Barrio'],
         navigation:['Permanent Marker'],
-        homeContent:['Kaushan Script']
+        homeContent:['Kaushan Script','Vidaloka'],
+        list:['Merienda'],
       },
-      backgroundImage:(theme)=>({
-        'login':"url('/public/images/login.jpg')",
-      }),
-    
     },
   },
   variants: {
