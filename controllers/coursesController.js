@@ -111,7 +111,7 @@ module.exports={
         let errorObject;
         if(error){
             errorObject={
-                status:httpStatus.INTERAL_SERVER_ERROR,
+                status:httpStatus.INTERNAL_SERVER_ERROR,
                 message:error.message
             };
         }

@@ -6,8 +6,9 @@ module.exports = {
       fontFamily:{
         homeheader:['Barrio'],
         navigation:['Permanent Marker'],
-        homeContent:['Kaushan Script','Vidaloka'],
+        homeContent:['Kaushan Script'],
         list:['Merienda'],
+        homeContentTwo:['Vidaloka']
       },
     },
   },
