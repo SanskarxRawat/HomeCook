@@ -1,10 +1,10 @@
 <div class="flex items-center justify-center h-screen" >
-    <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
+    <div class="bg-gray-800 flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-3">
      <div class="text-white mt-10">
        <h1 class="font-bold text-4xl">Welcome</h1>
        <p class="font-semibold">Edit the existing User</p>
      </div>
-     <form class="flex flex-col space-y-8 mt-10" action="<%=`/users/${user._id}/update?_method=PUT`%>" method="POST">
+     <form class="flex flex-col space-y-5 mt-10" action="<%=`/users/${user._id}/update?_method=PUT`%>" method="POST">
        <input type="text" placeholder="FirstName" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500 text-white" name='first' placeholder=' ' value="<%=user.name.first%>" autofocus required>
        <input type="text" placeholder="LastName" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500 text-white" name='last' value="<%=user.name.last%>" required>
        <input type="text" placeholder="Email" class="border rounded-lg py-3 px-3 bg-gray-700 border-gray-700 placeholder-gray-500 text-white" name='email' value="<%=user.email%>" required>
