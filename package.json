@@ -1,7 +1,7 @@
 {
   "name": "homecook",
   "version": "1.0.0",
-  "description": "A website to book cooking classes",
+  "description": "An application to book cooking classes.",
   "main": "main.js",
   "scripts": {
     "build-css":"tailwindcss build source/styles.css -o public/css/styles.css",
