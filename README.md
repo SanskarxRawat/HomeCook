@@ -5,7 +5,7 @@
 - HomeCook is a fully designed web application using MERN stack.
 - I've used Express.js to architect a standard web application.
 - This application uses MongoDB environment and Node.js package called Mongoose to store application's data.
-- I've organized appplication data in Mongoose models as one part of model-view-controller(MVC) architecture.
+- I've organized application data in Mongoose models as one part of model-view-controller(MVC) architecture.
 - I've have applied CRUD(create-read-update-delete) operations.
 - I've set up an authentication system to analyze and approve user.
 - I've have added sessions and cookies to this application to allow information's to be shared between application server and the user's computer.
